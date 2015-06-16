@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">AppliNotes</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="titre_accueil">Bienvenue</string>
+    <string name="accueil_choix1">Voir mes notes</string>
+    <string name="accueil_ma_moyenne">Ma moyenne : %1$s/20</string>
+    <string name="note_sur_vingt">%1$d /20</string>
+    <string name="btn_add_note">Ajouter la note</string>
+    <string name="entete_coeff">Coeff</string>
+    <string name="entete_note">Note</string>
+    <string name="entete_matiere">Nom de la matière</string>
+    <string name="add_note_title">Ajouter une nouvelle note</string>
+    <string name="add_nom_matiere">Nom de la matière :</string>
+    <string name="add_note">Note obtenue :</string>
+    <string name="add_coeff_matiere">Coefficient de la matière (si non déjà renseigné)</string>
+    <string name="add_matiere_error">Nom de la matière incorrect</string>
+    <string name="add_note_error">Note incorrecte</string>
+    <string name="add_coeff_error">Coeff incorrect</string>
+    <string name="add_ok">Ajout OK</string>
+    <string name="mod_note_title">Modifier la note</string>
+    <string name="mod_coeff_matiere">Coefficient de la matière</string>
+    <string name="btn_mod_note">Modifier la note</string>
+    <string name="btn_add_a_note">Ajouter une note</string>
+    <string name="choix_mod_rem">Choisissez une action :</string>
+    <string name="modify">Modifier</string>
+    <string name="remove">Supprimer</string>
+    <string name="txt_btn_reset">!! RESET !!</string>
+    <string name="menu_accueil">Accueil</string>
+    <string name="menu_reset">Remise à zéro</string>
+    <string name="menu_liste">Liste des notes</string>
+</resources>

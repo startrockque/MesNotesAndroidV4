@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-76f246e783421227b5a91e5a2a84c1ac069f14f1.jar" />
+    </item>
+    <item
+        jar="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\exploded-aar\com.specyci\residemenu\1.6\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="5e309b1df3051abebbfda31d1c80cd19bec617da">
+        <dex dex="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\pre-dexed\debug\classes-ab848ada24f45f5e6bf6c56af5ad5365391e0072.jar" />
+    </item>
+    <item
+        jar="C:\Users\Fabien\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\pre-dexed\debug\library-2.4.0-bf50e782451e2906a7830866482e14f90cb264e4.jar" />
+    </item>
+    <item
+        jar="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\exploded-aar\com.andreabaccega\android-form-edittext\1.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="352e84b094a60afce4e9efcf45887ee0c2b14e7d">
+        <dex dex="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\pre-dexed\debug\classes-84c43fc87abc896c5fc9a2371cf670096390efb6.jar" />
+    </item>
+    <item
+        jar="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\pre-dexed\debug\classes-df338e2526b639fbf61c8d3a023e08250a69d7d4.jar" />
+    </item>
+    <item
+        jar="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\exploded-aar\com.github.sd6352051.niftydialogeffects\niftydialogeffects\1.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="f6e011916db951e72f3a2be65cfb864bf5408035">
+        <dex dex="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\pre-dexed\debug\classes-db2272392aa2871f7a3757581c9fd731d0a48d89.jar" />
+    </item>
+    <item
+        jar="C:\Users\Fabien\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-bd5546087e9e051ba4e1b3d9d643b16e4b77b0d3.jar" />
+    </item>
+    <item
+        jar="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="C:\Users\Fabien\AndroidStudioProjects\MyNotes\app\build\intermediates\pre-dexed\debug\classes-8e872714e90125301ebdf6b68f1a98198496fedb.jar" />
+    </item>
+
+</items>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:notes="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mod_note_title"
+        android:textColor="@color/gris_fonce"
+        android:textSize="30sp"
+        android:paddingTop="50dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/add_nom_matiere"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"/>
+
+    <com.andreabaccega.widget.FormEditText
+        android:id="@+id/mod_note_matiere"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:inputType="text"
+        notes:testType="regexp"
+        notes:customRegexp="^[a-zA-Z]{2,30}$"
+        notes:testErrorString="@string/add_matiere_error"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/add_note"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"/>
+
+    <com.andreabaccega.widget.FormEditText
+        android:id="@+id/mod_note_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:inputType="numberDecimal"
+        notes:testType="regexp"
+        notes:customRegexp="^([0-9]{1,2})|([0-9]{1,2}+.[0-9]{1,3})$"
+        notes:testErrorString="@string/add_note_error"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/mod_coeff_matiere"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"/>
+
+    <com.andreabaccega.widget.FormEditText
+        android:id="@+id/mod_note_coeff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:inputType="number"
+        notes:testType="regexp"
+        notes:customRegexp="^[0-9]{1,2}$"
+        notes:testErrorString="@string/add_coeff_error"/>
+
+    <Button
+        android:id="@+id/button_mod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/btn_mod_note"
+        android:onClick="modNote"
+        style="@style/Big_button_green"/>
+</LinearLayout>

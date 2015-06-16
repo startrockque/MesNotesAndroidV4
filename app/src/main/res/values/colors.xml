@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bleuet">#ff00e2ff</color>
+    <color name="white_font">#ffffff</color>
+    <color name="green_button">#82c341</color>
+    <color name="gris_clair">#ffffdcf9</color>
+    <color name="moyenne">#84815B</color>
+    <color name="entete">#ADCF4F</color>
+    <color name="gris_fonce">#ff777779</color>
+</resources>
