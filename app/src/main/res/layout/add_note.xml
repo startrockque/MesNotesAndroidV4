@@ -8,13 +8,6 @@
     android:background="@color/gris_clair"
     tools:context=".AddNote">
 
-    <Button
-        android:id="@+id/btn_menu"
-        android:layout_width="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/trois_barre" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,7 +77,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/btn_add_note"
-        android:onClick="addNewNote"
         style="@style/Big_button_green"/>
 
 </LinearLayout>

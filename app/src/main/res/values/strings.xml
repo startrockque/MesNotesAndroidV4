@@ -2,7 +2,7 @@
     <string name="app_name">AppliNotes</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="titre_accueil">Bienvenue</string>
+    <string name="titre_menu">Menu</string>
     <string name="accueil_choix1">Voir mes notes</string>
     <string name="accueil_ma_moyenne">Ma moyenne : %1$s/20</string>
     <string name="note_sur_vingt">%1$d /20</string>
@@ -29,4 +29,6 @@
     <string name="menu_accueil">Accueil</string>
     <string name="menu_reset">Remise à zéro</string>
     <string name="menu_liste">Liste des notes</string>
+    <string name="menu_add">Ajouter une note</string>
+    <string name="txt_home">Bienvenu(e) sur cette application qui déchire. \nIci tu va pouvoir rentrer tes notes et connaitre ta moyenne sans te casser la tête. \nPour utiliser cette petite merveille, sert toi du menu ;)</string>
 </resources>

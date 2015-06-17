@@ -76,6 +76,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/btn_mod_note"
-        android:onClick="modNote"
         style="@style/Big_button_green"/>
 </LinearLayout>

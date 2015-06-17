@@ -7,4 +7,5 @@
     <color name="moyenne">#84815B</color>
     <color name="entete">#ADCF4F</color>
     <color name="gris_fonce">#ff777779</color>
+    <color name="background_menu_entete">#3C8CBB</color>
 </resources>

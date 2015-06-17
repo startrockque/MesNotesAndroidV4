@@ -1,96 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gris_clair"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:layout_marginBottom="5dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/titre_bienvenue"
-        android:text="@string/titre_accueil"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/btn_menu"
-        android:textSize="40sp"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="5dp"/>
+        android:layout_height="60dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_menu"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/trois_barre" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#2ea3fe"
+            android:layout_marginBottom="5dp"/>
 
-    <RelativeLayout
-        android:layout_below="@id/titre_bienvenue"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/moyenne"
+        <FrameLayout
+            android:id="@+id/menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/accueil_ma_moyenne"
-            android:background="@color/moyenne"
-            android:textSize="25sp"
-            android:gravity="center_horizontal"/>
-
-        <RelativeLayout
-            android:id="@+id/entete"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@id/moyenne"
-            android:background="@color/entete"
-            android:layout_marginBottom="5dp">
+            android:background="@color/background_menu_entete">
 
             <TextView
-                android:id="@+id/entete_coeff"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:text="@string/entete_coeff"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:layout_alignParentRight="true"/>
-
-            <TextView
-                android:id="@+id/entete_note"
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/entete_coeff"
-                android:text="@string/entete_note"
-                android:textSize="20sp"
-                android:gravity="center"/>
-
-            <TextView
+                android:id="@+id/titre_bienvenue"
+                android:text="@string/titre_menu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/entete_note"
-                android:text="@string/entete_matiere"
-                android:textSize="20sp"
-                android:gravity="center"/>
-        </RelativeLayout>
-        <ListView
-            android:id="@+id/liste_notes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/entete"
-            android:layout_above="@+id/button_add"
-            android:padding="2dp"
-            android:background="@drawable/bg_liste"/>
+                android:layout_height="50dp"
+                android:layout_toRightOf="@+id/btn_menu"
+                android:textSize="40sp"
+                android:textColor="@color/white_font"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="5dp"/>
+        </FrameLayout>
 
-        <Button
-            android:id="@+id/button_add"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="@string/btn_add_a_note"
-            android:onClick="addNote"
-            style="@style/Big_button_green"/>
-    </RelativeLayout>
-</RelativeLayout>
+            android:layout_height="5dp"
+            android:background="#ebebeb"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/main_fragment"/>
+</LinearLayout>
