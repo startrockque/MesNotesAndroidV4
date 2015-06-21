@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/accueil_ma_moyenne"
         android:background="@color/moyenne"
+        android:layout_marginTop="3dp"
         android:textSize="25sp"
         android:gravity="center_horizontal"/>
 
@@ -18,12 +19,23 @@
         android:id="@+id/entete"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginTop="5dp"
         android:background="@color/entete">
+
+        <TextView
+            android:id="@+id/entete_annee"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="@string/entete_annee"
+            android:layout_marginLeft="5dp"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/entete_matiere"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_weight="2"
             android:gravity="center"/>
 
@@ -32,15 +44,16 @@
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:text="@string/entete_note"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:gravity="center"/>
 
         <TextView
             android:id="@+id/entete_coeff"
             android:layout_width="60dp"
             android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
             android:text="@string/entete_coeff"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:gravity="center"/>
     </LinearLayout>
 
@@ -48,7 +61,6 @@
         android:id="@+id/liste_notes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="2dp"
-        android:layout_margin="5dp"
+        android:padding="4dp"
         android:background="@drawable/bg_liste"/>
 </LinearLayout>

@@ -3,12 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/une_note">
 
+    <ImageView
+        android:id="@+id/logo_annee"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="2dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"/>
+
+    <TextView
+        android:id="@+id/miniature_semestre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_toRightOf="@id/logo_annee"
+        android:layout_alignParentBottom="true"/>
+
     <TextView
         android:id="@+id/nom_matiere"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/note"
-        android:paddingLeft="10dp"
+        android:layout_toRightOf="@id/logo_annee"
+        android:paddingLeft="30dp"
+        android:textSize="20sp"
         android:gravity="center_vertical"/>
 
     <TextView
@@ -16,6 +33,7 @@
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/coefficient"
+        android:textSize="20sp"
         android:padding="2dp"
         android:background="@color/gris_clair"
         android:textColor="@color/white_font"
@@ -26,5 +44,6 @@
         android:layout_width="60dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
+        android:textSize="20sp"
         android:gravity="center"/>
 </RelativeLayout>
