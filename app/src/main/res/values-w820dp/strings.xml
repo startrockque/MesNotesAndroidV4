@@ -10,5 +10,8 @@
     <string name="menu_reset">Remise à zéro</string>
     <string name="menu_liste">Liste des notes</string>
     <string name="menu_add">Ajouter une note</string>
-    <string name="txt_home">Bienvenu(e) sur cette application qui déchire. \nIci tu va pouvoir rentrer tes notes et connaitre ta moyenne sans te casser la tête. \nPour utiliser cette petite merveille, sert toi du menu ;)</string>
+    <string name="txt_home">Bienvenu(e) sur cette application qui déchire. \nIci tu va pouvoir rentrer tes notes et connaitre ta moyenne sans te casser la tête. \nPour utiliser cette petite merveille, sert toi du menu en swipant de gauche à droite ;)</string>
+    <string name="reset_message">Attention ! Cette action supprimera toutes les notes que vous avez renseigné !</string>
+    <string name="cancel">Annuler</string>
+    <string name="confirm">Confirmer</string>
 </resources>

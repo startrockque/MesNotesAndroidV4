@@ -8,4 +8,11 @@
     <color name="entete">#ADCF4F</color>
     <color name="gris_fonce">#ff777779</color>
     <color name="background_menu_entete">#3C8CBB</color>
+
+    <color name="dialog_titre">#11000000</color>
+    <color name="dialog_titre_text">#ffff</color>
+    <color name="dialog_message">#ffff0f00</color>
+    <color name="dialog_message_text">#ff131313</color>
+    <color name="divider_custom_color">#ffff0500</color>
+
 </resources>

@@ -89,7 +89,7 @@ public class ListFragment extends Fragment {
                                 b.putInt("coeff", note.getCoeff());
                                 ModifyNoteFragment modifyNoteFragment = new ModifyNoteFragment();
                                 modifyNoteFragment.setArguments(b);
-                                dismiss();
+                                dialogBuilder.dismiss();
                                 parentActivity.changeFragment(modifyNoteFragment);
                             }
                         })
@@ -100,15 +100,11 @@ public class ListFragment extends Fragment {
                                 listeNotes.remove(note);
                                 parentActivity.loadData();
                                 setList();
-                                dismiss();
+                                dialogBuilder.dismiss();
                             }
                         })
                         .show();
             }
         });
-    }
-
-    public void dismiss() {
-        dialogBuilder.dismiss();
     }
 }

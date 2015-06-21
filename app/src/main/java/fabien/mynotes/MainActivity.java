@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.andreabaccega.widget.FormEditText;
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
@@ -31,6 +33,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ResideMenuItem itemReset;
     private ResideMenuItem itemList;
     private ResideMenuItem itemAdd;
+    private NiftyDialogBuilder dialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         loadData();
 
         mContext = this;
+        dialogBuilder = NiftyDialogBuilder.getInstance(mContext);
         setUpMenu();
         if( savedInstanceState == null )
             changeFragment(new HomeFragment());
@@ -60,11 +64,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             totalCoeff += n.getCoeff();
         }
         return totalNote/totalCoeff;
-    }
-
-    public void goToAddNote(View view) {
-        changeFragment(new AddNoteFragment());
-        overridePendingTransition(R.anim.right_to_center, R.anim.center_to_left);
     }
 
     public void addNewNote(Note note) {
@@ -114,7 +113,39 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         itemHome.setOnClickListener(this);
         itemList.setOnClickListener(this);
         itemAdd.setOnClickListener(this);
-        itemReset.setOnClickListener(this);
+        itemReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder
+                        .withTitle(getString(R.string.choix_mod_rem))
+                        .withTitleColor(R.color.white_font)
+                        .withDividerColor("#11000000")
+                        .withMessage(getString(R.string.reset_message))
+                        .withMessageColor("#FFFFFFFF")
+                        .withDialogColor("#FFE74C3C")
+                        .isCancelableOnTouchOutside(true)
+                        .withDuration(700)
+                        .withEffect(Effectstype.Shake)
+                        .withButton1Text(getString(R.string.cancel))
+                        .withButton2Text(getString(R.string.confirm))
+                        .setButton1Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dismiss();
+                            }
+                        })
+                        .setButton2Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                noteBdd.dropTable();
+                                loadData();
+                                dismiss();
+                                changeFragment(new HomeFragment());
+                            }
+                        })
+                        .show();
+            }
+        });
 
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemList, ResideMenu.DIRECTION_LEFT);
@@ -122,13 +153,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         resideMenu.addMenuItem(itemReset, ResideMenu.DIRECTION_LEFT);
 
         // You can disable a direction by setting ->
-        // resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-        findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
-            }
-        });
+         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
     }
 
     @Override
@@ -139,10 +164,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view == itemHome){
-            changeFragment(new HomeFragment());
-        }else if (view == itemReset){
-            noteBdd.dropTable();
-            loadData();
             changeFragment(new HomeFragment());
         }else if (view == itemList){
             changeFragment(new ListFragment());
@@ -159,6 +180,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 .replace(R.id.main_fragment, targetFragment, "fragment")
                 .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
+    }
+
+    public void dismiss() {
+        dialogBuilder.dismiss();
     }
 
     public ResideMenu getResideMenu(){
