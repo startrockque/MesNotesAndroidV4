@@ -5,12 +5,14 @@ public class Note {
     private String matiere;
     private double note;
     private int coeff;
+    private Periode periode;
 
-    public Note(int id, String matiere, double note, int coeff) {
+    public Note(int id, String matiere, double note, int coeff, Periode periode) {
         this.id = id;
         this.matiere = matiere;
         this.note = note;
         this.coeff = coeff;
+        this.periode = periode;
     }
 
     public Note() {
@@ -18,6 +20,7 @@ public class Note {
         matiere = "";
         note = 0;
         coeff = 0;
+        periode = new Periode();
     }
 
     public int getId() {
@@ -52,17 +55,27 @@ public class Note {
         this.coeff = coeff;
     }
 
+    public Periode getPeriode() {
+        return periode;
+    }
+
+    public void setPeriode(Periode periode) {
+        this.periode = periode;
+    }
+
     @Override
     public String toString() {
         return "Note{" +
-                "matiere='" + matiere + '\'' +
+                "id=" + id +
+                ", matiere='" + matiere + '\'' +
                 ", note=" + note +
                 ", coeff=" + coeff +
+                ", periode=" + periode +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        return ((Note)o).getMatiere().equals(matiere);
+        return (((Note)o).getMatiere().equals(matiere) && ((Note)o).getPeriode().equals(periode));
     }
 }

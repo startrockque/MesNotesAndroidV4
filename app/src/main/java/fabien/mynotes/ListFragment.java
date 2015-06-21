@@ -71,7 +71,9 @@ public class ListFragment extends Fragment {
                         .withDividerColor("#11000000")
                         .withMessage("Matiere : " + note.getMatiere() +
                                 "\nNote : " + note.getNote() +
-                                "\nCoeff : " + note.getCoeff())
+                                "\nCoeff : " + note.getCoeff() +
+                                "\nAnnée : " + note.getPeriode().getAnnee() +
+                                "\nSemestre : " + note.getPeriode().getSemestre())
                         .withMessageColor("#FFFFFFFF")
                         .withDialogColor("#FFE74C3C")
                         .isCancelableOnTouchOutside(true)
@@ -87,6 +89,8 @@ public class ListFragment extends Fragment {
                                 b.putString("matiere", note.getMatiere());
                                 b.putDouble("note", note.getNote());
                                 b.putInt("coeff", note.getCoeff());
+                                b.putString("annee", note.getPeriode().getAnnee());
+                                b.putInt("semestre", note.getPeriode().getSemestre());
                                 ModifyNoteFragment modifyNoteFragment = new ModifyNoteFragment();
                                 modifyNoteFragment.setArguments(b);
                                 dialogBuilder.dismiss();
@@ -96,7 +100,7 @@ public class ListFragment extends Fragment {
                         .setButton2Click(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                parentActivity.supprNote(note.getMatiere());
+                                parentActivity.supprNote(note.getMatiere(), note.getPeriode());
                                 listeNotes.remove(note);
                                 parentActivity.loadData();
                                 setList();

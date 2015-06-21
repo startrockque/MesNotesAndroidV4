@@ -10,15 +10,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MaBDD extends SQLiteOpenHelper {
     private static final String TABLE_NOTES = "table_des_notes";
     private static final String COL_ID = "ID";
-    private static final String COL_MATIERE = "matiere";
-    private static final String COL_NOTE = "note";
-    private static final String COL_COEFF = "coeff";
+    private static final String COL_MATIERE = "Matiere";
+    private static final String COL_NOTE = "Note";
+    private static final String COL_COEFF = "Coeff";
+    private static final String COL_ANNEE = "Annee";
+    private static final String COL_SEM = "Semestre";
 
     private static final String CREATE_BDD = "CREATE TABLE IF NOT EXISTS " + TABLE_NOTES + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_MATIERE + " TEXT NOT NULL, "
             + COL_NOTE + " INTEGER NOT NULL, "
-            + COL_COEFF + " INTEGER NOT NULL);";
+            + COL_COEFF + " INTEGER NOT NULL, "
+            + COL_ANNEE + " TEXT NOT NULL, "
+            + COL_SEM + " INTEGER NOT NULL);";
 
     private static final String DROP_BDD = "DELETE FROM "+ TABLE_NOTES +";";
 

@@ -1,17 +1,23 @@
 package fabien.mynotes;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 
 import com.andreabaccega.widget.FormEditText;
 import com.special.ResideMenu.ResideMenu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fabien.modele.Note;
+import fabien.modele.Periode;
 import fabien.validators.NoteValidator;
 
 public class ModifyNoteFragment extends Fragment implements View.OnClickListener{
@@ -20,6 +26,8 @@ public class ModifyNoteFragment extends Fragment implements View.OnClickListener
     private String matiere;
 
     private FormEditText matiereF, noteF, coeffF;
+    private Spinner annee;
+    private RadioButton radio1, radio2;
     private Button button;
 
     private View parentView;
@@ -39,9 +47,28 @@ public class ModifyNoteFragment extends Fragment implements View.OnClickListener
         matiereF = (FormEditText) parentView.findViewById(R.id.mod_note_matiere);
         noteF = (FormEditText) parentView.findViewById(R.id.mod_note_note);
         coeffF = (FormEditText) parentView.findViewById(R.id.mod_note_coeff);
+        annee = (Spinner) parentView.findViewById(R.id.mod_note_spinner);
+        radio1 = (RadioButton) parentView.findViewById(R.id.radio11);
+        radio2 = (RadioButton) parentView.findViewById(R.id.radio12);
 
         button = (Button) parentView.findViewById(R.id.button_mod);
         button.setOnClickListener(this);
+
+        List<String> annees = new ArrayList<>();
+        annees.add(getString(R.string.l1));
+        annees.add(getString(R.string.l2));
+        annees.add(getString(R.string.l3));
+        annees.add(getString(R.string.m1));
+        annees.add(getString(R.string.m2));
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(parentActivity, android.R.layout.simple_dropdown_item_1line, annees);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        annee.setAdapter(spinnerAdapter);
+        String value = getArguments().getString("annee");
+        if (!value.equals(null)) {
+            int spinnerPostion = spinnerAdapter.getPosition(value);
+            annee.setSelection(spinnerPostion);
+            spinnerPostion = 0;
+        }
         recupNote();
     }
 
@@ -50,6 +77,12 @@ public class ModifyNoteFragment extends Fragment implements View.OnClickListener
         matiere = getArguments().getString("matiere");
         note = getArguments().getDouble("note");
         coeff = getArguments().getInt("coeff");
+        int sem = getArguments().getInt("semestre");
+        if (sem == 1){
+            radio1.setChecked(true);
+        } else {
+            radio2.setChecked(true);
+        }
 
         matiereF.setText(matiere);
         noteF.setText(String.valueOf(note));
@@ -66,7 +99,18 @@ public class ModifyNoteFragment extends Fragment implements View.OnClickListener
             allValid = f.testValidity() && allValid;
         }
 
-        if (allValid)
-            parentActivity.modNote(new Note(id, matiereF.getText().toString(), Double.valueOf(noteF.getText().toString()), Integer.valueOf(coeffF.getText().toString())));
+        if (allValid) {
+            System.out.println("TOTO VA A LA PLAGE");
+            int sem = 0;
+            if (radio1.isChecked()) {
+                sem = 1;
+            } else if (radio2.isChecked()) {
+                sem = 2;
+            }
+            if (sem != 0) {
+                Periode periode = new Periode(annee.getSelectedItem().toString(), sem);
+                parentActivity.modNote(new Note(id, matiereF.getText().toString(), Double.valueOf(noteF.getText().toString()), Integer.valueOf(coeffF.getText().toString()), periode));
+            }
+        }
     }
 }

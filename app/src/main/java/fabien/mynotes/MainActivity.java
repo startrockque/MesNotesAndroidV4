@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
-import com.andreabaccega.widget.FormEditText;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.special.ResideMenu.ResideMenu;
@@ -18,6 +16,7 @@ import java.util.List;
 
 import fabien.bdd.NoteBDD;
 import fabien.modele.Note;
+import fabien.modele.Periode;
 
 /**
  * Created by Fabien on 10/06/2015.
@@ -74,14 +73,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void modNote(Note note) {
-            noteBdd.open();
-            noteBdd.updateNote(note.getId(), note);
-            noteBdd.close();
+        noteBdd.open();
+        noteBdd.updateNote(note.getId(), note);
+        noteBdd.close();
+        changeFragment(new ListFragment());
     }
 
-    public void supprNote(String nom){
+    public void supprNote(String nom, Periode periode){
         noteBdd.open();
-        noteBdd.removeNoteWithName(nom);
+        noteBdd.removeNoteWithName(nom, periode);
         noteBdd.close();
     }
 
@@ -153,7 +153,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         resideMenu.addMenuItem(itemReset, ResideMenu.DIRECTION_LEFT);
 
         // You can disable a direction by setting ->
-         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
     }
 
     @Override

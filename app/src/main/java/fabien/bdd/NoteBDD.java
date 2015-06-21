@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fabien.modele.Note;
+import fabien.modele.Periode;
 
 /**
  * Created by Fabien on 11/06/2015.
@@ -23,12 +24,17 @@ public class NoteBDD {
     private static final String COL_MATIERE = "Matiere";
     private static final String COL_NOTE = "Note";
     private static final String COL_COEFF = "Coeff";
-    public static final String[] COLUMNS = new String[]{COL_ID, COL_MATIERE, COL_NOTE, COL_COEFF};
+    private static final String COL_ANNEE = "Annee";
+    private static final String COL_SEM = "Semestre";
+    public static final String[] COLUMNS = new String[]{COL_ID, COL_MATIERE, COL_NOTE, COL_COEFF, COL_ANNEE, COL_SEM};
 
     private static final int NUM_COL_ID = 0;
     private static final int NUM_COL_MATIERE = 1;
     private static final int NUM_COL_NOTE = 2;
     private static final int NUM_COL_COEFF = 3;
+    private static final int NUM_COL_ANNEE = 4;
+    private static final int NUM_COL_SEM = 5;
+
 
     private SQLiteDatabase bdd;
 
@@ -59,6 +65,8 @@ public class NoteBDD {
         values.put(COL_MATIERE, note.getMatiere());
         values.put(COL_NOTE, note.getNote());
         values.put(COL_COEFF, note.getCoeff());
+        values.put(COL_ANNEE, note.getPeriode().getAnnee());
+        values.put(COL_SEM, note.getPeriode().getSemestre());
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(TABLE_NOTES, null, values);
     }
@@ -70,12 +78,15 @@ public class NoteBDD {
         values.put(COL_MATIERE, note.getMatiere());
         values.put(COL_NOTE, note.getNote());
         values.put(COL_COEFF, note.getCoeff());
+        values.put(COL_ANNEE, note.getPeriode().getAnnee());
+        values.put(COL_SEM, note.getPeriode().getSemestre());
         return bdd.update(TABLE_NOTES, values, COL_ID + " = " + id, null);
     }
 
-    public int removeNoteWithName(String nom){
+    public void removeNoteWithName(String nom, Periode periode){
         //Suppression d'une note de la BDD grâce à l'ID
-        return bdd.delete(TABLE_NOTES, COL_MATIERE + " LIKE \"" + nom + "\"", null);
+        bdd.execSQL("DELETE FROM "+TABLE_NOTES+" WHERE "+COL_MATIERE+ " LIKE \"" + nom + "\" AND " + COL_ANNEE + " = \"" +periode.getAnnee() + "\" AND " + COL_SEM + " = " +periode.getSemestre());
+//        return bdd.delete(TABLE_NOTES, COL_MATIERE + " LIKE \"" + nom + "\"", null);
     }
 
     public Note getNoteWithNom(String nom){
@@ -92,12 +103,7 @@ public class NoteBDD {
 
     //Cette méthode permet de convertir un cursor en une note
     private Note cursorToNote(Cursor c){
-        //si aucun élément n'a été retourné dans la requête, on renvoie null
-        if (c.getCount() == 0) {
-            return new Note(0, "Raté", 0.0, 3);
-        }
-
-        //Sinon on se place sur le premier élément
+       //Sinon on se place sur le premier élément
         c.moveToFirst();
         //On créé une note
         Note note = new Note();
@@ -106,6 +112,7 @@ public class NoteBDD {
         note.setMatiere(c.getString(NUM_COL_MATIERE));
         note.setNote(c.getDouble(NUM_COL_NOTE));
         note.setCoeff(c.getInt(NUM_COL_COEFF));
+        note.setPeriode(new Periode(c.getString(NUM_COL_ANNEE), c.getInt(NUM_COL_SEM)));
         //On ferme le cursor
         c.close();
 
@@ -134,6 +141,7 @@ public class NoteBDD {
                 note.setMatiere(c.getString(NUM_COL_MATIERE));
                 note.setNote(c.getDouble(NUM_COL_NOTE));
                 note.setCoeff(c.getInt(NUM_COL_COEFF));
+                note.setPeriode(new Periode(c.getString(NUM_COL_ANNEE), c.getInt(NUM_COL_SEM)));
                 notes.add(note);
                 c.moveToNext();
             }

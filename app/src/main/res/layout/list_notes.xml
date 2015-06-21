@@ -18,8 +18,7 @@
         android:id="@+id/entete"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@color/entete"
-        android:layout_marginBottom="5dp">
+        android:background="@color/entete">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -50,5 +49,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="2dp"
+        android:layout_margin="5dp"
         android:background="@drawable/bg_liste"/>
 </LinearLayout>

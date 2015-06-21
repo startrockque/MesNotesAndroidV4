@@ -3,7 +3,7 @@
     <string name="add_note_title">Ajouter une nouvelle note.</string>
     <string name="add_nom_matiere">Nom de la matière :</string>
     <string name="add_note">Note obtenue</string>
-    <string name="add_coeff_matiere">Coefficient de la matière (si non déjà renseigné)</string>
+    <string name="add_coeff_matiere">Coefficient de la matière :</string>
     <string name="add_ok">Ajout OK</string>
     <string name="txt_btn_reset">!! RESET !!</string>
     <string name="menu_accueil">Accueil</string>
@@ -14,4 +14,12 @@
     <string name="reset_message">Attention ! Cette action supprimera toutes les notes que vous avez renseigné !</string>
     <string name="cancel">Annuler</string>
     <string name="confirm">Confirmer</string>
+    <string name="add_coeff_annee">Année :</string>
+    <string name="add_coeff_semestre">Semestre :</string>
+    <string name="add_note_semestre1">1</string>
+    <string name="add_note_semestre2">2</string>
+    <string name="l1">Licence 1</string>
+    <string name="l3">Licence 3</string>
+    <string name="m1">Master 1</string>
+    <string name="m2">Master 2</string>
 </resources>
