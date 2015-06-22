@@ -98,7 +98,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-
     /*-------------- DEBUT DU MENU------------------ */
     public void setUpMenu() {
         // attach to current activity;

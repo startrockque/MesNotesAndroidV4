@@ -23,21 +23,23 @@
         android:background="@color/entete">
 
         <TextView
-            android:id="@+id/entete_annee"
+            android:id="@+id/entete_periode"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:text="@string/entete_annee"
+            android:text="@string/entete_periode"
             android:layout_marginLeft="5dp"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:gravity="center"/>
 
         <TextView
+            android:id="@+id/entete_matiere"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/entete_matiere"
             android:textSize="16sp"
             android:layout_weight="2"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:onClick="sortByName"/>
 
         <TextView
             android:id="@+id/entete_note"
