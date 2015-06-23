@@ -22,8 +22,10 @@ import java.util.List;
 
 import fabien.activity.MainActivity;
 import fabien.adapters.NoteAdapter;
+import fabien.comparator.CoeffComparator;
 import fabien.comparator.NameComparator;
 import fabien.comparator.NoteComparator;
+import fabien.comparator.YearComparator;
 import fabien.modele.Note;
 import fabien.mynotes.R;
 
@@ -38,9 +40,13 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     private View parentView;
     private MainActivity parentActivity;
     private ResideMenu resideMenu;
-    private NameComparator nameComparator;
 
+    private YearComparator yearComparator;
+    private NameComparator nameComparator;
+    private NoteComparator noteComparator;
+    private CoeffComparator coeffComparator;
     private boolean sortedByYear, sortedByName, sortedByNote, sortedByCoeff;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -133,6 +139,9 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         });
 
         nameComparator = new NameComparator();
+        yearComparator = new YearComparator();
+        noteComparator = new NoteComparator();
+        coeffComparator = new CoeffComparator();
 
         sortedByYear = false;
         sortedByName = false;
@@ -161,9 +170,11 @@ public class ListFragment extends Fragment implements View.OnClickListener {
                     sortByCoeff();
                 break;
         }
+        setList();
     }
 
     private void sortByCoeff() {
+        Collections.sort(listeNotes, coeffComparator);
         sortedByYear = false;
         sortedByName = false;
         sortedByNote = false;
@@ -171,6 +182,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
     private void sortByNote() {
+        Collections.sort(listeNotes, noteComparator);
         sortedByYear = false;
         sortedByName = false;
         sortedByNote = true;
@@ -178,9 +190,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
     private void sortByName() {
-        System.out.println("SORT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Collections.sort(listeNotes, nameComparator);
-        setList();
         sortedByYear = false;
         sortedByName = true;
         sortedByNote = false;
@@ -188,6 +198,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
     private void sortByYear() {
+        Collections.sort(listeNotes, yearComparator);
         sortedByYear = true;
         sortedByName = false;
         sortedByNote = false;

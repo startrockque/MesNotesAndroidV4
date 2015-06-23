@@ -10,6 +10,12 @@ import fabien.modele.Note;
 public class CoeffComparator implements Comparator<Note> {
     @Override
     public int compare(Note lhs, Note rhs) {
-        return 0;
+        if (lhs.getCoeff() > rhs.getCoeff()){
+            return -1;
+        } else if (lhs.getCoeff() < rhs.getCoeff()){
+            return 1;
+        } else {
+            return lhs.getMatiere().compareTo(rhs.getMatiere());
+        }
     }
 }
