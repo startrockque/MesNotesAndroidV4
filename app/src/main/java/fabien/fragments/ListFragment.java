@@ -1,15 +1,15 @@
 package fabien.fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
@@ -17,7 +17,6 @@ import com.special.ResideMenu.ResideMenu;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import fabien.activity.MainActivity;
@@ -35,7 +34,17 @@ import fabien.mynotes.R;
 public class ListFragment extends Fragment implements View.OnClickListener {
     private TextView maMoyenne, annee, matiere, note, coeff;
     private NiftyDialogBuilder dialogBuilder;
+    private Spinner spinnerAnnee, spinnerSemestre, spinnerMatiere;
+    private ListView listeNotesView;
+
+    private ArrayAdapter<String> yearAdapter, matiereAdapter;
+    private ArrayAdapter<String> semesterAdapter;
+
     private List<Note> listeNotes = new ArrayList<>();
+    private List<Note> listeToDisplay = new ArrayList<>();
+    private List<String> listYears = new ArrayList<>();
+    private List<String> listSemesters = new ArrayList<>();
+    private List<String> listMatieres = new ArrayList<>();
 
     private View parentView;
     private MainActivity parentActivity;
@@ -52,45 +61,89 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.list_notes, container, false);
         dialogBuilder = NiftyDialogBuilder.getInstance(parentView.getContext());
-        setUpViews();
-        listeNotes = parentActivity.getListeNotes();
-        setList();
-        return parentView;
-    }
-
-    private void setUpViews(){
         parentActivity = (MainActivity) getActivity();
         resideMenu = parentActivity.getResideMenu();
         parentActivity.loadData();
+
+        setList();
+
+        setUpViews();
+
+        setUpAdapters();
+
+        setUpListeners();
+
+        return parentView;
+    }
+
+
+    public void setList() {
+        listeNotes = parentActivity.getListeNotes();
+        listeToDisplay.addAll(listeNotes);
+
+        listYears = parentActivity.getAllYears();
+        listSemesters = parentActivity.getAllSemesters();
+        listMatieres = parentActivity.getAllMatieres();
+
+        nameComparator = new NameComparator();
+        yearComparator = new YearComparator();
+        noteComparator = new NoteComparator();
+        coeffComparator = new CoeffComparator();
+
+        sortedByYear = false;
+        sortedByName = false;
+        sortedByNote = false;
+        sortedByCoeff = false;
+    }
+
+    private void setUpViews() {
         maMoyenne = (TextView) parentView.findViewById(R.id.moyenne);
+
+        if (listeToDisplay.size() != 0) {
+            String moy = String.valueOf(parentActivity.moyenne(listeToDisplay));
+            maMoyenne.setText(getResources().getString(R.string.accueil_ma_moyenne, moy.substring(0, Math.min(6, moy.length()))));
+        } else {
+            maMoyenne.setText(getResources().getString(R.string.accueil_ma_moyenne, "0"));
+        }
+
+        listeNotesView = (ListView) parentView.findViewById(R.id.liste_notes);
 
         annee = (TextView) parentView.findViewById(R.id.entete_periode);
         matiere = (TextView) parentView.findViewById(R.id.entete_matiere);
         note = (TextView) parentView.findViewById(R.id.entete_note);
         coeff = (TextView) parentView.findViewById(R.id.entete_coeff);
 
-        annee.setOnClickListener(this);
-        matiere.setOnClickListener(this);
-        note.setOnClickListener(this);
-        coeff.setOnClickListener(this);
+        spinnerAnnee = (Spinner) parentView.findViewById(R.id.spinner_année);
+        spinnerSemestre = (Spinner) parentView.findViewById(R.id.spinner_semestre);
+        spinnerMatiere = (Spinner) parentView.findViewById(R.id.spinner_matiere);
+
+        refreshList();
     }
 
-    public void setList() {
-        NoteAdapter noteAdapter = new NoteAdapter(parentView.getContext(), listeNotes);
-        final ListView listeNotesView = (ListView) parentView.findViewById(R.id.liste_notes);
-        listeNotesView.setAdapter(noteAdapter);
+    private void refreshList() {
+        listeNotesView.setAdapter(new NoteAdapter(parentView.getContext(), listeToDisplay));
+    }
 
-        if (listeNotes.size() != 0) {
-            String moy = String.valueOf(parentActivity.moyenne(listeNotes));
-            maMoyenne.setText(getResources().getString(R.string.accueil_ma_moyenne, moy.substring(0,Math.min(6, moy.length()))));
-        } else {
-            maMoyenne.setText(getResources().getString(R.string.accueil_ma_moyenne, "0"));
-        }
+    private void setUpAdapters() {
+        yearAdapter = new ArrayAdapter<>(parentActivity, android.R.layout.simple_dropdown_item_1line, listYears);
+        semesterAdapter = new ArrayAdapter<>(parentActivity, android.R.layout.simple_dropdown_item_1line, listSemesters);
+        matiereAdapter = new ArrayAdapter<>(parentActivity, android.R.layout.simple_dropdown_item_1line, listMatieres);
 
+        yearAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        semesterAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        matiereAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
+        spinnerAnnee.setAdapter(yearAdapter);
+        spinnerSemestre.setAdapter(semesterAdapter);
+        spinnerMatiere.setAdapter(matiereAdapter);
+
+    }
+
+    private void setUpListeners() {
         listeNotesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
-                final Note note = listeNotes.get(position);
+                final Note note = listeToDisplay.get(position);
 
                 dialogBuilder
                         .withTitle(getString(R.string.choix_mod_rem))
@@ -129,8 +182,9 @@ public class ListFragment extends Fragment implements View.OnClickListener {
                             public void onClick(View v) {
                                 parentActivity.supprNote(note.getMatiere(), note.getPeriode());
                                 listeNotes.remove(note);
+                                listeToDisplay.remove(note);
                                 parentActivity.loadData();
-                                setList();
+                                setUpAdapters();
                                 dialogBuilder.dismiss();
                             }
                         })
@@ -138,21 +192,34 @@ public class ListFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        nameComparator = new NameComparator();
-        yearComparator = new YearComparator();
-        noteComparator = new NoteComparator();
-        coeffComparator = new CoeffComparator();
+        annee.setOnClickListener(this);
+        matiere.setOnClickListener(this);
+        note.setOnClickListener(this);
+        coeff.setOnClickListener(this);
 
-        sortedByYear = false;
-        sortedByName = false;
-        sortedByNote = false;
-        sortedByCoeff = false;
+        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sortBySpinners(spinnerAnnee.getSelectedItemPosition(), spinnerSemestre.getSelectedItemPosition(), spinnerMatiere.getSelectedItemPosition());
+//                ((Spinner) view).setSelection(position);
+                refreshList();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+
+        spinnerAnnee.setOnItemSelectedListener(onItemSelectedListener);
+        spinnerSemestre.setOnItemSelectedListener(onItemSelectedListener);
+        spinnerMatiere.setOnItemSelectedListener(onItemSelectedListener);
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.entete_periode:
                 if (!sortedByYear)
                     sortByYear();
@@ -170,11 +237,11 @@ public class ListFragment extends Fragment implements View.OnClickListener {
                     sortByCoeff();
                 break;
         }
-        setList();
+        refreshList();
     }
 
     private void sortByCoeff() {
-        Collections.sort(listeNotes, coeffComparator);
+        Collections.sort(listeToDisplay, coeffComparator);
         sortedByYear = false;
         sortedByName = false;
         sortedByNote = false;
@@ -182,7 +249,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
     private void sortByNote() {
-        Collections.sort(listeNotes, noteComparator);
+        Collections.sort(listeToDisplay, noteComparator);
         sortedByYear = false;
         sortedByName = false;
         sortedByNote = true;
@@ -190,7 +257,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
     private void sortByName() {
-        Collections.sort(listeNotes, nameComparator);
+        Collections.sort(listeToDisplay, nameComparator);
         sortedByYear = false;
         sortedByName = true;
         sortedByNote = false;
@@ -198,10 +265,43 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
     private void sortByYear() {
-        Collections.sort(listeNotes, yearComparator);
+        Collections.sort(listeToDisplay, yearComparator);
         sortedByYear = true;
         sortedByName = false;
         sortedByNote = false;
         sortedByCoeff = false;
+    }
+
+
+    private void sortBySpinners(int year, int semester, int matiere) {
+        listeToDisplay.clear();
+        List<Note> tmp = new ArrayList<>();
+        if (!listYears.get(year).equals(getString(R.string.allyears))) {
+            for (Note n : listeNotes) {
+                if (n.getPeriode().getAnnee().equals(listYears.get(year)))
+                    tmp.add(n);
+            }
+        } else {
+            tmp.addAll(listeNotes);
+        }
+
+        listeToDisplay.addAll(tmp);
+        if (!listSemesters.get(semester).equals(getString(R.string.allsemesters))) {
+            for (Note n : listeToDisplay) {
+                if (!(String.valueOf(n.getPeriode().getSemestre()).equals(listSemesters.get(semester))))
+                    tmp.remove(n);
+            }
+        }
+
+        listeToDisplay.clear();
+        listeToDisplay.addAll(tmp);
+        if (!listMatieres.get(matiere).equals(getString(R.string.allyears))) {
+            for (Note n : listeToDisplay) {
+                if (!n.getMatiere().equals(listMatieres.get(matiere)))
+                    tmp.remove(n);
+            }
+        }
+
+        listeToDisplay = tmp;
     }
 }

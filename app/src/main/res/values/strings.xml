@@ -44,4 +44,6 @@
     <string name="m1">Master 1</string>
     <string name="m2">Master 2</string>
     <string name="entete_periode">Période</string>
+    <string name="allyears">Toutes</string>
+    <string name="allsemesters">1 et 2</string>
 </resources>

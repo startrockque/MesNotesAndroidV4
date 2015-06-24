@@ -12,6 +12,8 @@ import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import fabien.bdd.NoteBDD;
@@ -95,6 +97,41 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public void setListeNotes(List<Note> listeNotes) {
         this.listeNotes = listeNotes;
+    }
+
+    public List<String> getAllYears(){
+        List<String> annees = new ArrayList<>();
+        annees.add(getString(R.string.allyears));
+        annees.add(getString(R.string.l1));
+        annees.add(getString(R.string.l2));
+        annees.add(getString(R.string.l3));
+        annees.add(getString(R.string.m1));
+        annees.add(getString(R.string.m2));
+        return annees;
+    }
+
+    public List<String> getAllSemesters(){
+        List<String> semestres = new ArrayList<>();
+        semestres.add(getString(R.string.allsemesters));
+        semestres.add("1");
+        semestres.add("2");
+        return semestres;
+    }
+
+    public List<String> getAllMatieres(){
+        List<String> matieres = new ArrayList<>();
+        matieres.add(getString(R.string.allyears));
+        for (Note n : listeNotes){
+            if (!matieres.contains(n.getMatiere()))
+                matieres.add(n.getMatiere());
+        }
+        Collections.sort(matieres, new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.compareTo(rhs);
+            }
+        });
+        return matieres;
     }
 
 

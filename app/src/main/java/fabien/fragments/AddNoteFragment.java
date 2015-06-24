@@ -13,9 +13,6 @@ import android.widget.Spinner;
 import com.andreabaccega.widget.FormEditText;
 import com.special.ResideMenu.ResideMenu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fabien.activity.MainActivity;
 import fabien.modele.Note;
 import fabien.modele.Periode;
@@ -58,13 +55,8 @@ public class AddNoteFragment extends Fragment implements View.OnClickListener{
 
         note.addValidator(new NoteValidator(getString(R.string.add_note_error)));
 
-        List<String> annees = new ArrayList<>();
-        annees.add(getString(R.string.l1));
-        annees.add(getString(R.string.l2));
-        annees.add(getString(R.string.l3));
-        annees.add(getString(R.string.m1));
-        annees.add(getString(R.string.m2));
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(parentActivity, android.R.layout.simple_dropdown_item_1line, annees);
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(parentActivity, android.R.layout.simple_dropdown_item_1line, parentActivity.getAllYears());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         annee.setAdapter(spinnerAdapter);
     }

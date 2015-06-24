@@ -56,13 +56,7 @@ public class ModifyNoteFragment extends Fragment implements View.OnClickListener
         button = (Button) parentView.findViewById(R.id.button_mod);
         button.setOnClickListener(this);
 
-        List<String> annees = new ArrayList<>();
-        annees.add(getString(R.string.l1));
-        annees.add(getString(R.string.l2));
-        annees.add(getString(R.string.l3));
-        annees.add(getString(R.string.m1));
-        annees.add(getString(R.string.m2));
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(parentActivity, android.R.layout.simple_dropdown_item_1line, annees);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(parentActivity, android.R.layout.simple_dropdown_item_1line, parentActivity.getAllYears());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         annee.setAdapter(spinnerAdapter);
         String value = getArguments().getString("annee");
