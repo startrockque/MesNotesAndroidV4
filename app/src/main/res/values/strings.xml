@@ -46,4 +46,5 @@
     <string name="entete_periode">Période</string>
     <string name="allyears">Toutes</string>
     <string name="allsemesters">1 et 2</string>
+    <string name="empty_list_msg">Aucune note ne correspond à la recherche</string>
 </resources>

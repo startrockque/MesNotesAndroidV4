@@ -24,4 +24,5 @@
     <string name="m2">Master 2</string>
     <string name="entete_periode">Période</string>
     <string name="allyears">Toutes</string>
+    <string name="empty_list_msg">Aucune note ne correspond à la recherche</string>
 </resources>

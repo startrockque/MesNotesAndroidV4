@@ -1,5 +1,6 @@
 package fabien.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,16 +34,17 @@ import fabien.mynotes.R;
  * Created by Fabien on 17/06/2015.
  */
 public class ListFragment extends Fragment implements View.OnClickListener {
-    private TextView maMoyenne, annee, matiere, note, coeff;
+    private TextView maMoyenne, annee, matiere, note, coeff, emptyView;
     private NiftyDialogBuilder dialogBuilder;
     private Spinner spinnerAnnee, spinnerSemestre, spinnerMatiere;
     private ListView listeNotesView;
+    private ProgressBar loadingView;
 
     private ArrayAdapter<String> yearAdapter, matiereAdapter;
     private ArrayAdapter<String> semesterAdapter;
 
     private List<Note> listeNotes = new ArrayList<>();
-    private List<Note> listeToDisplay = new ArrayList<>();
+    private ArrayList<Note> listeToDisplay = new ArrayList<>();
     private List<String> listYears = new ArrayList<>();
     private List<String> listSemesters = new ArrayList<>();
     private List<String> listMatieres = new ArrayList<>();
@@ -56,6 +59,8 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     private CoeffComparator coeffComparator;
     private boolean sortedByYear, sortedByName, sortedByNote, sortedByCoeff;
 
+    private Populate populate;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,14 +69,13 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         parentActivity = (MainActivity) getActivity();
         resideMenu = parentActivity.getResideMenu();
         parentActivity.loadData();
+        populate = new Populate();
 
         setList();
 
         setUpViews();
 
-        setUpAdapters();
-
-        setUpListeners();
+        populate.execute(listeToDisplay);
 
         return parentView;
     }
@@ -97,6 +101,9 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setUpViews() {
+        loadingView = (ProgressBar) parentView.findViewById(R.id.loading_view);
+        emptyView = (TextView) parentView.findViewById(R.id.empty_view);
+
         maMoyenne = (TextView) parentView.findViewById(R.id.moyenne);
 
         if (listeToDisplay.size() != 0) {
@@ -274,8 +281,9 @@ public class ListFragment extends Fragment implements View.OnClickListener {
 
 
     private void sortBySpinners(int year, int semester, int matiere) {
+        populate.showLoading(listeNotesView, loadingView, emptyView);
         listeToDisplay.clear();
-        List<Note> tmp = new ArrayList<>();
+        ArrayList<Note> tmp = new ArrayList<>();
         if (!listYears.get(year).equals(getString(R.string.allyears))) {
             for (Note n : listeNotes) {
                 if (n.getPeriode().getAnnee().equals(listYears.get(year)))
@@ -303,5 +311,62 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         }
 
         listeToDisplay = tmp;
+
+        if (listeToDisplay.size() <=0){
+            populate.showEmptyText(listeNotesView, loadingView, emptyView);
+        } else {
+            populate.showContent(listeNotesView, loadingView, emptyView);
+        }
+    }
+
+
+
+
+    private class Populate extends AsyncTask<ArrayList<Note>, Void, Void>{
+        public void showLoading(View content_view,View mLoadingView,View mEmptyView){
+            content_view.setVisibility(View.GONE);
+            mLoadingView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        }
+
+        public void showContent(View content_view,View mLoadingView,View mEmptyView){
+            content_view.setVisibility(View.VISIBLE);
+            mLoadingView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.GONE);
+        }
+
+        public void showEmptyText(View content_view,View mLoadingView,View mEmptyView){
+            content_view.setVisibility(View.GONE);
+            mLoadingView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPreExecute(){
+            //show loading indicator
+            showLoading(listeNotesView, loadingView, emptyView);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(ArrayList<Note>... params){
+            setUpAdapters();
+
+            setUpListeners();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            if(!isCancelled()){
+                if(listeToDisplay.size()<=0){
+                    showEmptyText(listeNotesView, loadingView, emptyView);
+                } else {
+                    showContent(listeNotesView,loadingView,emptyView);
+                }
+            }
+            super.onPostExecute(result);
+        }
     }
 }

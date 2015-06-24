@@ -61,10 +61,17 @@
             android:gravity="center"/>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/liste_notes"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="4dp"
-        android:background="@drawable/bg_liste"/>
+        android:layout_height="match_parent">
+
+        <include layout="@layout/loading_empty_list"/>
+
+        <ListView
+            android:id="@+id/liste_notes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="4dp"
+            android:background="@drawable/bg_liste"/>
+    </FrameLayout>
 </LinearLayout>
