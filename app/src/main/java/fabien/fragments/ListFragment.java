@@ -19,6 +19,7 @@ import com.special.ResideMenu.ResideMenu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import fabien.activity.MainActivity;
@@ -58,6 +59,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     private NoteComparator noteComparator;
     private CoeffComparator coeffComparator;
     private boolean sortedByYear, sortedByName, sortedByNote, sortedByCoeff;
+    private String currentMatiere;
 
     private Populate populate;
 
@@ -77,6 +79,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
 
         populate.execute(listeToDisplay);
 
+        currentMatiere = getString(R.string.allyears);
         return parentView;
     }
 
@@ -207,8 +210,14 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sortBySpinners(spinnerAnnee.getSelectedItemPosition(), spinnerSemestre.getSelectedItemPosition(), spinnerMatiere.getSelectedItemPosition());
-//                ((Spinner) view).setSelection(position);
+                try{
+                    currentMatiere = spinnerMatiere.getSelectedItem().toString();
+                    sortBySpinners(spinnerAnnee.getSelectedItem(), spinnerSemestre.getSelectedItem(), spinnerMatiere.getSelectedItem());
+                } catch (IndexOutOfBoundsException e){
+                    spinnerMatiere.setSelection(0);
+                    currentMatiere = spinnerMatiere.getSelectedItem().toString();
+                    sortBySpinners(spinnerAnnee.getSelectedItem(), spinnerSemestre.getSelectedItem(), spinnerMatiere.getSelectedItem());
+                }
                 refreshList();
             }
 
@@ -280,13 +289,13 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void sortBySpinners(int year, int semester, int matiere) {
+    private void sortBySpinners(Object year, Object semester, Object matiere) {
         populate.showLoading(listeNotesView, loadingView, emptyView);
         listeToDisplay.clear();
         ArrayList<Note> tmp = new ArrayList<>();
-        if (!listYears.get(year).equals(getString(R.string.allyears))) {
+        if (!year.toString().equals(getString(R.string.allyears))) {
             for (Note n : listeNotes) {
-                if (n.getPeriode().getAnnee().equals(listYears.get(year)))
+                if (n.getPeriode().getAnnee().equals(year.toString()))
                     tmp.add(n);
             }
         } else {
@@ -294,23 +303,34 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         }
 
         listeToDisplay.addAll(tmp);
-        if (!listSemesters.get(semester).equals(getString(R.string.allsemesters))) {
+        if (!semester.toString().equals(getString(R.string.allsemesters))) {
             for (Note n : listeToDisplay) {
-                if (!(String.valueOf(n.getPeriode().getSemestre()).equals(listSemesters.get(semester))))
+                if (!(String.valueOf(n.getPeriode().getSemestre()).equals(semester.toString())))
                     tmp.remove(n);
             }
         }
 
         listeToDisplay.clear();
         listeToDisplay.addAll(tmp);
-        if (!listMatieres.get(matiere).equals(getString(R.string.allyears))) {
+        listMatieres = getAllMatieres(listeToDisplay);
+        matiereAdapter.clear();
+        matiereAdapter.addAll(listMatieres);
+
+        if (!matiere.toString().equals(getString(R.string.allyears))) {
             for (Note n : listeToDisplay) {
-                if (!n.getMatiere().equals(listMatieres.get(matiere)))
+                if (!n.getMatiere().equals(matiere.toString()))
                     tmp.remove(n);
             }
         }
 
         listeToDisplay = tmp;
+
+        int spinnerPostion = matiereAdapter.getPosition(currentMatiere);
+        if (listMatieres.contains(currentMatiere)) {
+            spinnerMatiere.setSelection(spinnerPostion);
+        } else {
+            spinnerMatiere.setSelection(0);
+        }
 
         if (listeToDisplay.size() <=0){
             populate.showEmptyText(listeNotesView, loadingView, emptyView);
@@ -319,7 +339,21 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
+    private List<String> getAllMatieres(ArrayList<Note> listeToDisplay) {
+        List<String> matieres = new ArrayList<>();
+        matieres.add(getString(R.string.allyears));
+        for (Note n : listeToDisplay){
+            if (!matieres.contains(n.getMatiere()))
+                matieres.add(n.getMatiere());
+        }
+        Collections.sort(matieres, new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.compareTo(rhs);
+            }
+        });
+        return matieres;
+    }
 
 
     private class Populate extends AsyncTask<ArrayList<Note>, Void, Void>{

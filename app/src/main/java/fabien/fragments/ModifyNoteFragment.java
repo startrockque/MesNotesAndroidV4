@@ -63,7 +63,6 @@ public class ModifyNoteFragment extends Fragment implements View.OnClickListener
         if (!value.equals(null)) {
             int spinnerPostion = spinnerAdapter.getPosition(value);
             annee.setSelection(spinnerPostion);
-            spinnerPostion = 0;
         }
         recupNote();
     }
