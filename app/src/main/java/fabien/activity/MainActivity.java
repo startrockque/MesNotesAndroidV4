@@ -39,7 +39,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ResideMenuItem itemList;
     private ResideMenuItem itemAdd;
     private NiftyDialogBuilder dialogBuilder;
-
+	
+	// Test de modificatoin pour git
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
